@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
                 listnya=kelasBesar.getList_data();
                 adapternya=new CoronaAdapter(listnya,MainActivity.this);
                 rvcorona.setAdapter(adapternya);
+                Intent intent=getIntent();
+                kelasBesar=(KelasBesar) intent.getSerializableExtra("dataku");
             }
 
             @Override

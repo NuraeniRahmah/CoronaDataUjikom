@@ -12,14 +12,16 @@ import android.widget.TextView;
 import java.io.Serializable;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class DetailActivity extends AppCompatActivity {
     TextView txtsembuh,txtmeni,txtrawat,txtlk,txtpr,txtposi,txtsemb,txtmening;
     ImageView imgback;
     Button btnbrkt;
     Provinsi data;
-    List<Umur> kelompok_umur;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,22 +36,6 @@ public class DetailActivity extends AppCompatActivity {
         txtmening=(TextView)findViewById(R.id.txt_mening);
         imgback=(ImageView)findViewById(R.id.img_back);
         btnbrkt=(Button)findViewById(R.id.btn_berikut);
-        imgback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent pindah=new Intent(DetailActivity.this,MainActivity.class);
-                startActivity(pindah);
-            }
-        });
-        btnbrkt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<Umur> kirimkan=kelompok_umur;
-                Intent pinah=new Intent(DetailActivity.this,DetailActivity2.class);
-                pinah.putExtra("terima", (Serializable) kirimkan);
-                v.getContext().startActivity(pinah);
-            }
-        });
         Intent dapet=getIntent();
         data= (Provinsi) dapet.getSerializableExtra("kirim");
         txtsembuh.setText(Integer.toString(data.getJumlah_sembuh()));
@@ -60,6 +46,25 @@ public class DetailActivity extends AppCompatActivity {
         txtposi.setText(Integer.toString(data.getPenambahan().getPositif()));
         txtsemb.setText(Integer.toString(data.getPenambahan().getSembuh()));
         txtmening.setText(Integer.toString(data.getPenambahan().getMeninggal()));
+        btnbrkt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent kirim = new Intent(DetailActivity.this, DetailActivity1.class);
+                kirim.putExtra("terima", data);
+                startActivity(kirim);
+                finish();
+            }
+        });
+
+        imgback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent pindah=new Intent(DetailActivity.this,MainActivity.class);
+                startActivity(pindah);
+            }
+        });
+
+
 
 
     }
